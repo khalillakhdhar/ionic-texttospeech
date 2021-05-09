@@ -5,7 +5,7 @@ Ionic text to speech    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content (click)="startListening()" [fullscreen]="true">
   <ion-list>
     <ion-item-sliding *ngFor="let text of Text_app">
       <ion-item>
@@ -18,10 +18,7 @@ Ionic text to speech    </ion-title>
   </ion-list>
   <hr>
 
-  <ion-button color="primary" size="full" (click)= "checkPermission()"> Permission</ion-button>
-  <ion-button color="primary" size="full" (click)= "startListening()"> Démarrer</ion-button>
-  <ion-button color="primary" size="full" (click)= "stopListening()"> Stop</ion-button>
- 
+
   <ion-card>
     <ion-card-title>j'ai entendu....</ion-card-title>
     <ion-card-content>
