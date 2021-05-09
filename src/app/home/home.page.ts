@@ -29,12 +29,12 @@ export class HomePage implements OnInit {
 
   }
   ngOnInit() {
-    
+    this.speechRecognition.requestPermission();
+
   for(let txt of this.Text_application)
   {
     this.convertTextToSpeech_en(txt);
   }
-  this.speechRecognition.requestPermission();
   }
   
    
