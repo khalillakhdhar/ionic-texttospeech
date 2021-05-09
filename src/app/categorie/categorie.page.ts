@@ -12,12 +12,21 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 export class CategoriePage implements OnInit {
   categorie:Categorie;
   categories:Categorie[];
-  constructor(private cateogrieService:CategorieService) { }
+  constructor(    private textToSpeech: TextToSpeech,public speechRecognition: SpeechRecognition
+,    private cateogrieService:CategorieService) { }
   public matches=[];
 
   ngOnInit() {
 this.categorie=new Categorie();
       this.read();
+      for(let ca of this.categories)
+{
+  this.textToSpeech.speak({
+    text: ca.titre+ " "+ca.description,
+    locale: 'fr-FR',
+    rate: 0.75
+});
+}
   }
   read()
 {
