@@ -20,10 +20,10 @@ export class HomePage implements OnInit {
       "Bonjour",
       "Je suis l'application",
       "je suis ici pour vous aider",
-      "Choisissez une catégorie ou un produit!"      
+      "Dite catégorie pour entendre la liste!"      
     ];
     this.Text_application = [
-      "Bonjour Je suis l'application je suis ici pour vous aider Choisissez une catégorie ou un produit!"
+      "Bonjour Je suis l'application je suis ici pour vous aider Dite catégorie pour entendre la liste!"
     ];
 
 
@@ -86,7 +86,11 @@ export class HomePage implements OnInit {
         language: 'fr-FR'
       }
    this.speechRecognition.startListening(options).subscribe((speeches)=>{
-     this.matches=speeches
+     this.matches=speeches;
+     if(this.matches.includes("catégorie"))
+     {
+       window.location.replace("categorie");
+     }
    },(err)=>{
      alert(JSON.stringify(err))
    })
