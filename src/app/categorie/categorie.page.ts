@@ -12,6 +12,7 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 export class CategoriePage implements OnInit {
   categorie:Categorie;
   categories:Categorie[];
+  liste="";
   constructor(    private textToSpeech: TextToSpeech,public speechRecognition: SpeechRecognition
 ,    private cateogrieService:CategorieService) { }
   public matches=[];
@@ -19,14 +20,14 @@ export class CategoriePage implements OnInit {
   ngOnInit() {
 this.categorie=new Categorie();
       this.read();
-      for(let ca of this.categories)
-{
-  this.textToSpeech.speak({
-    text: ca.titre+ " "+ca.description,
-    locale: 'fr-FR',
-    rate: 0.75
-});
-}
+      alert(this.liste);
+     
+    this.textToSpeech.speak({
+      text: this.liste,
+      locale: 'fr-FR',
+      rate: 0.75
+  });
+  
   }
   read()
 {
@@ -45,10 +46,28 @@ this.categorie=new Categorie();
       };
     });
     console.log(this.categories);
-
+  for(let ca of this.categories)
+  {
+    this.liste=this.liste+" "+ca.titre;
+  }
   });
 
 }
+   
+startListening(){
+  let options = {
+    language: 'fr-FR'
+  }
+this.speechRecognition.startListening(options).subscribe((speeches)=>{
+ this.matches=speeches;
+ if(this.matches.length>0)
+ {
+   window.location.replace("produits");
+ }
+},(err)=>{
+ alert(JSON.stringify(err))
+})
 
+ }
 
 }
