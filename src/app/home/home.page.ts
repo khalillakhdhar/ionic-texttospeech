@@ -35,6 +35,7 @@ export class HomePage implements OnInit {
   {
     this.convertTextToSpeech_en(txt);
   }
+ 
   }
   
    
