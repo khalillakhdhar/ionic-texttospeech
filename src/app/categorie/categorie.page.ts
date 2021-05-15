@@ -20,13 +20,8 @@ export class CategoriePage implements OnInit {
   ngOnInit() {
 this.categorie=new Categorie();
       this.read();
-      alert(this.liste);
      
-    this.textToSpeech.speak({
-      text: this.liste,
-      locale: 'fr-FR',
-      rate: 0.75
-  });
+   
   
   }
   read()
@@ -49,9 +44,15 @@ this.categorie=new Categorie();
   for(let ca of this.categories)
   {
     this.liste=this.liste+" "+ca.titre;
+    
   }
+  this.textToSpeech.speak({
+    text: this.liste,
+    locale: 'fr-FR',
+    rate: 0.75
+});
   });
-
+ 
 }
    
 startListening(){
