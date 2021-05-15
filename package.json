@@ -27,7 +27,10 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic-native/text-to-speech": "^5.30.0",
     "@ionic/angular": "^5.0.0",
+    "@types/hammerjs": "^2.0.39",
     "firebase": "^8.5.0",
+    "hammerjs": "^2.0.8",
+    "ionic-long-press": "^2.0.3",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
