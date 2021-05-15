@@ -3,6 +3,7 @@ import { Categorie } from '../classes/categorie';
 import { CategorieService } from '../services/categorie.service';
 import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { LongPressModule } from 'ionic-long-press';
 
 @Component({
   selector: 'app-categorie',
@@ -46,11 +47,14 @@ this.categorie=new Categorie();
     this.liste=this.liste+" "+ca.titre;
     
   }
+  for(let i=0;i<3;i++)
+  {
   this.textToSpeech.speak({
     text: this.liste,
     locale: 'fr-FR',
     rate: 0.75
 });
+  }
   });
  
 }
@@ -63,6 +67,7 @@ this.speechRecognition.startListening(options).subscribe((speeches)=>{
  this.matches=speeches;
  if(this.matches.length>0)
  {
+   localStorage.setItem("choix",this.matches.toString());
    window.location.replace("produits");
  }
 },(err)=>{
