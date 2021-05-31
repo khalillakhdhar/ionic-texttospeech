@@ -23,7 +23,7 @@ export class HomePage implements OnInit {
       "Dite catégorie pour entendre la liste!"      
     ];
     this.Text_application = [
-      "Bonjour Je suis l'application je suis ici pour vous aider Dite catégorie pour entendre la liste!"
+      "Salut utilisateur dite analyse pour commencer!"
     ];
 
 
@@ -88,7 +88,7 @@ export class HomePage implements OnInit {
       }
    this.speechRecognition.startListening(options).subscribe((speeches)=>{
      this.matches=speeches;
-     if(this.matches.includes("catégorie"))
+     if(this.matches.includes("analyse"))
      {
        window.location.replace("categorie");
      }
