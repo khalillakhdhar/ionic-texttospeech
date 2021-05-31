@@ -4,76 +4,60 @@ import { CategorieService } from '../services/categorie.service';
 import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { LongPressModule } from 'ionic-long-press';
-
+import {
+  BarcodeScannerOptions,
+  BarcodeScanner
+} from "@ionic-native/barcode-scanner/ngx";
 @Component({
   selector: 'app-categorie',
   templateUrl: './categorie.page.html',
   styleUrls: ['./categorie.page.scss'],
 })
 export class CategoriePage implements OnInit {
-  categorie:Categorie;
-  categories:Categorie[];
-  liste="";
-  constructor(    private textToSpeech: TextToSpeech,public speechRecognition: SpeechRecognition
-,    private cateogrieService:CategorieService) { }
-  public matches=[];
-
+  encodedData: any;
+  scannedData: {};
+  barcodeScannerOptions: BarcodeScannerOptions; 
   ngOnInit() {
-this.categorie=new Categorie();
-      this.read();
+
      
    
   
   }
-  read()
-{
-  this.cateogrieService.read_Categories().subscribe(data => {
 
-    this.categories = data.map(e => {
-      return {
-       id: e.payload.doc.id,
-
-      
-       titre: e.payload.doc.data()["titre"],
-       description: e.payload.doc.data()["description"],
-
-
-
-      };
-    });
-    console.log(this.categories);
-  for(let ca of this.categories)
-  {
-    this.liste=this.liste+" "+ca.titre;
-    
+  constructor(private barcodeScanner: BarcodeScanner) {
+    this.encodedData = "https://www.google.com";
+    //Options
+    this.barcodeScannerOptions = {
+      showTorchButton: true,
+      showFlipCameraButton: true
+    };
   }
-  for(let i=0;i<3;i++)
-  {
-  this.textToSpeech.speak({
-    text: this.liste,
-    locale: 'fr-FR',
-    rate: 0.75
-});
-  }
-  });
- 
-}
-   
-startListening(){
-  let options = {
-    language: 'fr-FR'
-  }
-this.speechRecognition.startListening(options).subscribe((speeches)=>{
- this.matches=speeches;
- if(this.matches.length>0)
- {
-   localStorage.setItem("choix",this.matches.toString());
-   window.location.replace("produits");
- }
-},(err)=>{
- alert(JSON.stringify(err))
-})
 
- }
+  scanCode() {
+    this.barcodeScanner
+      .scan()
+      .then(barcodeData => {
+        alert("Barcode data " + JSON.stringify(barcodeData));
+        this.scannedData = barcodeData;
+        localStorage.setItem("choix",this.scannedData["text"]);
+        window.location.replace("produits");
+      })
+      .catch(err => {
+        console.log("Error", err);
+      });
+  }
 
+  encodedText() {
+    this.barcodeScanner
+      .encode(this.barcodeScanner.Encode.TEXT_TYPE, this.encodedData)
+      .then(
+        encodedData => {
+          console.log(encodedData);
+          this.encodedData = encodedData;
+        },
+        err => {
+          console.log("Error occured : " + err);
+        }
+      );
+  }
 }
