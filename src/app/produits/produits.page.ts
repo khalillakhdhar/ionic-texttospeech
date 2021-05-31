@@ -39,13 +39,11 @@ selected=false;
       return {
         id: e.payload.doc.id,
   
-         titre: e.payload.doc.data()["titre"],
-         prix: e.payload.doc.data()["prix"],
-         photo: e.payload.doc.data()["photo"],
-         categorie: e.payload.doc.data()["categorie"],
-         quantite_totale: e.payload.doc.data()["quantite_totale"],
-         description: e.payload.doc.data()["description"],
-        
+        titre: e.payload.doc.data()["titre"],
+        description: e.payload.doc.data()["description"],
+        prix: e.payload.doc.data()["prix"],
+        codebarre: e.payload.doc.data()["codebarre"],
+       
         
   
       };
@@ -55,11 +53,13 @@ selected=false;
     console.log("liste",this.produits);
     for(let pr of this.produits)
     {
+      if(pr.codebarre==this.choix)
       this.liste=this.liste+" "+pr.titre+", le prix est :  "+pr.prix+",   ";
       
     }
     console.log("produits",this.produits);
     console.log("liste ",this.liste);
+    alert(this.liste);
     for(let i=0;i<3;i++)
   {
   this.textToSpeech.speak({
@@ -72,5 +72,10 @@ selected=false;
   
   
   
+  }
+  back()
+  {
+window.location.replace("categorie");
+
   }
 }
