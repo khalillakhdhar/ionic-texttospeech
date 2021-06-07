@@ -16,15 +16,17 @@ import {
 export class CategoriePage implements OnInit {
   encodedData: any;
   scannedData: {};
+  public matches=[];
+  Text_application = [];
+
   barcodeScannerOptions: BarcodeScannerOptions; 
   ngOnInit() {
-
-     
+   
    
   
   }
 
-  constructor(private barcodeScanner: BarcodeScanner) {
+  constructor(private barcodeScanner: BarcodeScanner, private textToSpeech: TextToSpeech,public speechRecognition: SpeechRecognition) {
     this.encodedData = "https://www.google.com";
     //Options
     this.barcodeScannerOptions = {
@@ -37,7 +39,7 @@ export class CategoriePage implements OnInit {
     this.barcodeScanner
       .scan()
       .then(barcodeData => {
-        alert("Barcode data " + JSON.stringify(barcodeData));
+       // alert("Barcode data " + JSON.stringify(barcodeData));
         this.scannedData = barcodeData;
         localStorage.setItem("choix",this.scannedData["text"]);
         window.location.replace("produits");
@@ -60,4 +62,19 @@ export class CategoriePage implements OnInit {
         }
       );
   }
+
+  convertTextToSpeech_en(text) {
+    this.textToSpeech.speak({
+      text: text,
+      locale: 'fr-FR',
+      rate: 0.75
+  })
+  .then(() => 
+    console.log('Done')
+  )
+  .catch((reason: any) => 
+    console.log(reason)
+  );
+}
+
 }
